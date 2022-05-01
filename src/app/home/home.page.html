@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Welcome {{nom}} 
+      <ion-button style="float: right;" type="submit" color="dark" (click)="logout()">Log Out <ion-icon name="log-out"></ion-icon></ion-button>
+    </ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="nom == 'etudiant'">
+  <br>
+<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp;  Process List: </h4> <hr>
+
+  <div  *ngFor=" let pro of listprocess">
+
+    <ion-list >
+
+        <ion-item class="box">
+          <ion-label [routerLink]="['/process/' + pro.key]"> {{ pro.name}} </ion-label> 
+  
+      </ion-item>
+      <hr>
+    </ion-list>
+
+  </div>
+
+  
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="nom == 'agent' || nom == 'enseignant'">
+  <br>
+<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp;  Task List: </h4> <hr>
+
+  <div  *ngFor=" let task of listtask">
+
+    <ion-list >
+
+        <ion-item class="box">
+          <ion-label [routerLink]="['/task/' + task.id]"> {{ task.name}} </ion-label> 
+  
+      </ion-item>
+      <hr>
+    </ion-list>
+
+  </div> 
+</ion-content>
