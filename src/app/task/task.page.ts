@@ -16,6 +16,7 @@ export class TaskPage implements OnInit {
   form: any
   champsaffiche = [];
   champs =[];
+  test=false;
   taske: string
   jsondata ={
    variables:{
@@ -63,28 +64,32 @@ export class TaskPage implements OnInit {
     this.taske = data['name'];
      })
 
+     
+
 }
 add(){
   console.log(this.jsondata);
   this.task.dotask(this.route.snapshot.paramMap.get('id'),this.jsondata).then((data)=>{
-    this.toast.show(`process start successfly`, '5000', 'center').subscribe(
+  /*  this.toast.show(`process start successfly`, '5000', 'center').subscribe(
       toast => {
         console.log(toast);
       }
-    );
+    );*/
+    this.errorFunc('Task done successfly');
    this.router.navigate(['home']);
      }).catch((err)=> {
-      this.toast.show(`erreur !`+err, '5000', 'center').subscribe(
+     /* this.toast.show(`erreur !`+err, '5000', 'center').subscribe(
         toast => {
           console.log(toast);
         }
-      );
+      );*/
+      this.errorFunc(`erreur !`+err);
      })
     
     }
-  clictrue(obj){
+  clictrue(obj, test:boolean){
     console.log(obj);
-    this.jsondata.variables[obj].value = true;
+    this.jsondata.variables[obj].value = test;
 
   }
   clicfalse(obj){
@@ -92,4 +97,14 @@ add(){
     this.jsondata.variables[obj].value = false;
 
   }
+
+async errorFunc(message){
+  const alert =  await this.alertCtrl.create({
+    cssClass: 'basic-alert',
+    message: message,
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
 }

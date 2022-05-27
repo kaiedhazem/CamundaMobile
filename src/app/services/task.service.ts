@@ -15,7 +15,7 @@ export class TaskService {
     gettask(){
       return new Promise((resolve, reject) => {
       let username=localStorage.getItem("nom")
-      let password="bpm"
+      let password=localStorage.getItem("password")
           const axios = require('axios');
   
           axios.get('/camunda/task',
@@ -39,7 +39,7 @@ export class TaskService {
     gettaskform(id){
       return new Promise((resolve, reject) => {
       let username=localStorage.getItem("nom")
-      let password="bpm"
+      let password=localStorage.getItem("password")
           const axios = require('axios');
   
           axios.get('/camunda/task/'+id+'/form-variables',
@@ -63,7 +63,7 @@ export class TaskService {
     getvariables(id){
       return new Promise((resolve, reject) => {
       let username=localStorage.getItem("nom")
-      let password="bpm"
+      let password=localStorage.getItem("password")
           const axios = require('axios');
   
           axios.get('/camunda/task/'+id+'/variables',
@@ -87,7 +87,7 @@ export class TaskService {
     gettaskbykey(id){
       return new Promise((resolve, reject) => {
       let username=localStorage.getItem("nom")
-      let password="bpm"
+      let password=localStorage.getItem("password")
           const axios = require('axios');
           axios.get('camunda/task/'+id,
                 {
@@ -108,7 +108,7 @@ export class TaskService {
     dotask(id , task){
       return new Promise((resolve, reject) => {
       let username=localStorage.getItem("nom")
-      let password="bpm"
+      let password=localStorage.getItem("password")
           const axios = require('axios');
           axios.post('camunda/task/'+id+'/submit-form',task,
                 {
@@ -128,4 +128,5 @@ export class TaskService {
                 })
   });
     }
+    
 }

@@ -2,15 +2,22 @@
   <ion-toolbar>
     <ion-title>
       Welcome {{nom}} 
-      <ion-button style="float: right;" type="submit" color="dark" (click)="logout()">Log Out <ion-icon name="log-out"></ion-icon></ion-button>
+      <ion-button style="float: right;" type="submit" color="dark" (click)="logout()"><ion-icon name="log-out"></ion-icon></ion-button>
     </ion-title> 
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" *ngIf="nom == 'etudiant'">
-  <br>
-<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp;  Process List: </h4> <hr>
 
+<ion-toolbar color="light">
+  <ion-button style="float: right; width: 48%;" type="submit" color="dark" (click)="setTest(true)">PROCESS </ion-button>
+  <ion-button style="float: left; width: 48%;" type="submit" color="dark" (click)="setTest(false)">TASKS </ion-button>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true">
+  <br>
+  <div *ngIf="test==true">
+<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp;{{tailleProcess}}  Process </h4> <hr>
+<ion-item class="box"  style="text-align: center;" *ngIf="tailleProcess==0">No process available for you, {{nom}} </ion-item>
   <div  *ngFor=" let pro of listprocess">
 
     <ion-list >
@@ -19,18 +26,19 @@
           <ion-label [routerLink]="['/process/' + pro.key]"> {{ pro.name}} </ion-label> 
   
       </ion-item>
-      <hr>
+     
     </ion-list>
 
   </div>
-
+</div>
   
-</ion-content>
 
-<ion-content [fullscreen]="true" *ngIf="nom == 'agent' || nom == 'enseignant'">
-  <br>
-<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp;  Task List: </h4> <hr>
 
+
+  <hr>
+  <div *ngIf="test==false">
+<h4 style="font-style: oblique 40deg; font-family: Helvetica, Arial, sans-serif"> &nbsp; {{tailleTask}} Task(s) </h4> <hr>
+<ion-item class="box" style="text-align: center;" *ngIf="tailleTask==0">Sorry No tasks available for you, {{nom}}</ion-item>
   <div  *ngFor=" let task of listtask">
 
     <ion-list >
@@ -39,8 +47,9 @@
           <ion-label [routerLink]="['/task/' + task.id]"> {{ task.name}} </ion-label> 
   
       </ion-item>
-      <hr>
+     
     </ion-list>
 
-  </div> 
+  </div>
+</div> 
 </ion-content>

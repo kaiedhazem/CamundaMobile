@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import {NavController,AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -18,29 +19,18 @@ export class LoginPage  {
     public alertCtrl: AlertController,
     public storage:Storage,
     public auth:AuthService,
+    public router:Router
   ) {
   }
   
   myLogIn(){
-    if( (this.email.trim() == 'etudiant')|| (this.email.trim() == 'agent')  ||(this.email.trim() ==  'enseignant')) {
-
-     // console.log(this.email.trim() + "   " + this.password.trim() )
-
-      if (this.password.trim()  !== 'bpm') {
-        this.errorFunc('Wrong password')
-      }
-      else{
-        this.auth.login(this.email.trim())
-        this.email = '';
-        this.password ='';
-      }
-   }
-   else{
-    
-      this. errorFunc('Wrong login')
-    
-    
-    }
+    this.auth.login(this.email.trim(),this.password.trim()).then((data)=>{
+      this.router.navigate(['home']);
+  
+       }).catch((err)=> {
+      
+        this.errorFunc("Wrong Login or password !!");
+       })
   
 }
 ionViewDidLoad() {

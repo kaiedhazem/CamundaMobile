@@ -36,11 +36,6 @@ jsondata ={
      while (Object.keys(data)[i]) {
        this.champs[i]= Object.keys(data)[i]; 
        this.jsondata.variables[Object.keys(data)[i]] = data[Object.keys(data)[i]]
-       /*{
-         value:"",
-         type: "String",
-         valueInfo: {}
-       };*/
        i++;
      }
         this.form=this.champs;
@@ -52,19 +47,22 @@ jsondata ={
       
 add(){
   this.camunda.startprocess(this.route.snapshot.paramMap.get('id'),this.jsondata).then((data)=>{
-    this.toast.show(`process start successfly`, '5000', 'center').subscribe(
-      toast => {
-        console.log(toast);
-      }
-    );
+ 
+    this.errorFunc('Request delivred successfully');
    this.router.navigate(['home']);
      }).catch((err)=> {
-      this.toast.show(`erreur !`+err, '5000', 'center').subscribe(
-        toast => {
-          console.log(toast);
-        }
-      );
+    
+      this.errorFunc(`erreur !`+err);
      })
+}
+async errorFunc(message){
+  const alert =  await this.alertCtrl.create({
+    cssClass: 'basic-alert',
+    message: message,
+    buttons: ['OK']
+  });
+
+  await alert.present();
 }
 
 }

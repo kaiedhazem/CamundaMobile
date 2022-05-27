@@ -5,6 +5,7 @@ import { CamundaService } from '../services/camunda.service';
 import { AuthService } from '../services/auth.service';
 import { TaskService } from '../services/task.service';
 import { Toast } from '@awesome-cordova-plugins/toast/ngx';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -14,6 +15,9 @@ export class HomePage implements OnInit {
 nom : string
 listprocess: any
 listtask: any
+tailleProcess:any;
+tailleTask:any;
+test=false;
   constructor( 
      public navCtrl: NavController,
     public alertCtrl: AlertController,
@@ -21,20 +25,30 @@ listtask: any
     public camunda:CamundaService,
     public auth:AuthService,
     public task:TaskService,
-    public toast:Toast
+    public toast:Toast,
+    public router:Router
     ) {}
 ngOnInit(): void {
   this.nom = localStorage.getItem("nom")
   this.camunda.http_GET().then((data)=>{
+    
        this.listprocess=data
+       this.tailleProcess=this.listprocess.length;
+       console.log(this.listprocess.length);
       }),
+      
       this.task.gettask().then((dat)=>{
         this.listtask=dat
+        this.tailleTask= this.listtask.length;
        })
 }
 
 logout(){
   this.auth.logout();
  location.reload();
+}
+
+setTest(val:boolean){
+  this.test=val;
 }
 }
